@@ -6,7 +6,8 @@ export default class GoogleAuthorizationService extends ExternalAuthorizationSer
     name = "google";
 
     public async authorize(authorizationData: IAuthorizationData) {
-        (await this.page.$(this.buttonSelector))!.click();
+        await this.page.waitForSelector(this.buttonSelector);
+        (await this.page.$(this.buttonSelector)).click();
 
         //enter login
         await this.fillInput("input[type=email]", authorizationData.login);

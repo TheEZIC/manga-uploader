@@ -5,6 +5,7 @@ import Source from "./Source/Source";
 
 import data from "../authorizationData.json";
 import IAuthorizationData from "./IAuthorizationData";
+import RemangaSource from "./Source/Remanga";
 
 let authorizationData = data as IAuthorizationData[];
 
@@ -44,7 +45,9 @@ export default class MangaUploader {
                 height: 720,
             }
         });
+
         const source = new MangalibSource(this.browser);
+        //const source = new RemangaSource(this.browser);
 
         await source.init();
 
@@ -54,8 +57,8 @@ export default class MangaUploader {
         Logger.success("success");
         Logger.attention("attention"); */
 
-        await source.authorize(authorizationData[0]);
+        await source.authorizer.authorize(authorizationData[0]);
 
-        console.log(await source.hasAuthorization());
+        console.log(await source.authorizer.hasAuthorization());
     }
 }

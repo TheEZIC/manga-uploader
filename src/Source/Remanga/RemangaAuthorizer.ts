@@ -3,17 +3,18 @@ import IAuthorizationData from "../../IAuthorizationData";
 import Logger from "../../Logger";
 import Authorizer from "../Authorizer";
 
-export default class MangalibAuthorizer extends Authorizer {
+export default class RemangaAuthorizer extends Authorizer {
     externalAuthorizationServices = [
-        new GoogleAuthorizationService(this.source, ".social-sign .button[data-social=google]"),
+        new GoogleAuthorizationService(this.source, ".MuiButtonBase-root.MuiButton-text:nth-child(3)"),
     ];
 
     protected async authorizeByDefault(authorizationData: IAuthorizationData) {
-        const [, loginInput, passwordInput] = await this.page.$$(".form__input");
+        const loginInput = await this.page.$("#login");
+        const passwordInput = await this.page.$("#password");
 
         await loginInput.type(authorizationData.login);
         await passwordInput.type(authorizationData.password);
-        await this.page.click(".form__footer .button");
+        await this.page.click("button.MuiButton-contained");
 
         const authorized = await this.hasAuthorization();
 
@@ -22,8 +23,8 @@ export default class MangalibAuthorizer extends Authorizer {
     }
 
     protected gotoAuthorizationPage = async () =>
-        await this.page.click(".header__sign-in");
+        await this.page.click(".MuiButtonBase-root.c26");
 
     public hasAuthorization = async () =>
-        !!(await this.page.$(".header-right-menu__avatar"));
+        !!(await this.page.$(".MuiButtonBase-root[aria-label=Notifications]"));
 }

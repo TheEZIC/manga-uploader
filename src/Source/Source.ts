@@ -28,17 +28,9 @@ export default abstract class Source implements ISourceInfo {
         this.loadUploader();
     }
 
-    protected authorizer: Authorizer;
+    public authorizer: Authorizer;
     protected abstract loadAuthorizer(): void;
 
-    public authorize = async (authorizationData: IAuthorizationData) =>
-        await this.authorizer.authorize(authorizationData);
-
-    public hasAuthorization = async (): Promise<boolean> => 
-        await this.authorizer.hasAuthorization();
-
-    protected uploader: Uploader;
+    public uploader: Uploader;
     protected abstract loadUploader(): void;
-
-    public upload = async () => await this.uploader.upload();
 }
