@@ -22,19 +22,7 @@ export default class MangaUploader {
 
         for await (let source of this.sources) {
             await source.init();
-
-            /* if (!(await source.hasAuthorization)) {
-                source.authorize();
-            } */
-
-            //source.upload();
         }
-
-        /* this.sources[0].authorize({
-            authorizeVia: "",
-            login: "admin",
-            password: "admin",
-        }); */
     }
 
     async test() {
@@ -47,16 +35,7 @@ export default class MangaUploader {
         });
 
         const source = new MangalibSource(this.browser);
-        //const source = new RemangaSource(this.browser);
-
         await source.init();
-
-        /* Logger.log("123")
-        Logger.error("error");
-        Logger.warning("warning");
-        Logger.success("success");
-        Logger.attention("attention"); */
-
         await source.authorizer.authorize(authorizationData[0]);
 
         console.log(await source.authorizer.hasAuthorization());

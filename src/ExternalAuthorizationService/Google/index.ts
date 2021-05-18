@@ -19,7 +19,7 @@ export default class GoogleAuthorizationService extends ExternalAuthorizationSer
         await this.clickBtn("#passwordNext button[type=button]");
         await this.page.waitForTimeout(2000);
 
-        let isGoogle = this.page.url().startsWith("https://accounts.google.com/")
+        let isGoogle = this.page.url().startsWith("https://accounts.google.com/");
 
         //process 2FA if we still on google address
         if (isGoogle && await this.page.$("samp.fD1Pid")) {
