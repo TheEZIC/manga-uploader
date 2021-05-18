@@ -7,17 +7,10 @@ export default class GoogleAuthorizationService extends ExternalAuthorizationSer
 
     public async authorize(authorizationData: IAuthorizationData) {
         await this.page.waitForSelector(this.buttonSelector);
-        (await this.page.$(this.buttonSelector)).click();
+        await (await this.page.$(this.buttonSelector)).click();
 
-        //enter login
-        await this.fillInput("input[type=email]", authorizationData.login);
-        await this.clickBtn("#identifierNext button[type=button]");
-        await this.page.waitForTimeout(2000);
-
-        //enter password
-        await this.fillInput("input[type=password]", authorizationData.password);
-        await this.clickBtn("#passwordNext button[type=button]");
-        await this.page.waitForTimeout(2000);
+        await this.fillSection("input[type=email]", "#identifierNext button[type=button]", authorizationData.login);
+        await this.fillSection("input[type=password]", "#passwordNext button[type=button]", authorizationData.password);
 
         let isGoogle = this.page.url().startsWith("https://accounts.google.com/");
 
@@ -41,5 +34,15 @@ export default class GoogleAuthorizationService extends ExternalAuthorizationSer
 
         //waiting until we come back to manga source
         await this.page.waitForNavigation({ waitUntil: "networkidle2" });
+    }
+
+    private async fillSection(
+        inputSelector: string,
+        btnSelector: string,
+        text: string
+    ) {
+        await this.fillInput(inputSelector, text);
+        await this.clickBtn(btnSelector);
+        await this.page.waitForTimeout(2000);
     }
 }
