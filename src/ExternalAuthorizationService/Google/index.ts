@@ -18,7 +18,7 @@ export default class GoogleAuthorizationService extends ExternalAuthorizationSer
         if (isGoogle && await this.page.$("samp.fD1Pid")) {
             const TFAText = await this.getInnerText("samp.fD1Pid");
 
-            Logger.attention(`Google 2FA on ${this.source.name} source. Please press ${TFAText} on you phone`);
+            Logger.attention(`Google 2FA on ${this.source.name} source. Please press ${TFAText} on your phone`);
             
             let holdProgress = true;
 

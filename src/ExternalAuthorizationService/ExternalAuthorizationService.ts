@@ -1,6 +1,7 @@
 import { Page } from "puppeteer";
 import IAuthorizationData from "../IAuthorizationData";
 import Source from "../Source/Source";
+import prompt from "prompt";
 
 export default abstract class ExternalAuthorizationService {
     public abstract name: string;
