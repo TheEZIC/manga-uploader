@@ -21,16 +21,18 @@ export default abstract class ExternalAuthorizationServiceWithToken extends Exte
         return result.token;
     }
 
-    protected async getToken(): Promise<string> {
+    protected async processTokenConfirmation(): Promise<string> {
         const token = await this.requestTokenFromConsole();
+        await this.applyToken(token);
 
         if (!(await this.checkTokenSuccess())) {
             Logger.attention(`Token ${token} is wrong. Please try again`);
-            await this.getToken();
+            await this.processTokenConfirmation();
         }
 
         return token;
     }
 
+    protected abstract applyToken(token: string): Promise<void>;
     protected abstract checkTokenSuccess(): Promise<boolean>;
 }

@@ -21,7 +21,7 @@ export default abstract class Source implements ISourceInfo {
 
     public async init() {
         this.page = await this.browser.newPage();
-        await this.page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36");
+        await this.page.setUserAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36");
         await this.page.goto(this.baseLink, { waitUntil: "networkidle2" });
 
         this.loadAuthorizer();

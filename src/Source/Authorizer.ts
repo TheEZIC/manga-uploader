@@ -20,11 +20,15 @@ export default abstract class Authorizer {
     }
 
     public async authorize(authorizationData: IAuthorizationData): Promise<void> {
+        if (await this.hasAuthorization()) {
+            return Logger.success(`You are already authorized at ${this.source.name}`);
+        }
+
         await this.gotoAuthorizationPage();
 
         if (authorizationData.authorizeVia === "") {
             await this.authorizeByDefault(authorizationData);
-            return Logger.success(`authorized to ${this.source.name}`);
+            return Logger.success(`Authorized to ${this.source.name}`);
         }
 
         const externalAuthorizationService = this.externalAuthorizationServices

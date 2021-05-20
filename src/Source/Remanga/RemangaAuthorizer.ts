@@ -2,9 +2,11 @@ import GoogleAuthorizationService from "../../ExternalAuthorizationService/Googl
 import IAuthorizationData from "../../IAuthorizationData";
 import Logger from "../../Logger";
 import Authorizer from "../Authorizer";
+import VkAuthorizationService from "../../ExternalAuthorizationService/Vk";
 
 export default class RemangaAuthorizer extends Authorizer {
     externalAuthorizationServices = [
+        new VkAuthorizationService(this.source, ".MuiButtonBase-root.MuiButton-text:nth-child(1)"),
         new GoogleAuthorizationService(this.source, ".MuiButtonBase-root.MuiButton-text:nth-child(3)"),
     ];
 

@@ -2,10 +2,12 @@ import GoogleAuthorizationService from "../../ExternalAuthorizationService/Googl
 import IAuthorizationData from "../../IAuthorizationData";
 import Logger from "../../Logger";
 import Authorizer from "../Authorizer";
+import VkAuthorizationService from "../../ExternalAuthorizationService/Vk";
 
 export default class MangalibAuthorizer extends Authorizer {
     externalAuthorizationServices = [
         new GoogleAuthorizationService(this.source, ".social-sign .button[data-social=google]"),
+        new VkAuthorizationService(this.source, ".social-sign .button[data-social=vk]"),
     ];
 
     protected async authorizeByDefault(authorizationData: IAuthorizationData) {
