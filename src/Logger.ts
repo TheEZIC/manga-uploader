@@ -16,7 +16,7 @@ export default class Logger {
     }
 
     static warning(text: string) {
-        console.log(Style.WARNING(`[Error] ${fixString(text)}`));
+        console.log(Style.WARNING(`[Warning] ${fixString(text)}`));
     }
 
     static success(text: string) {
@@ -28,6 +28,6 @@ export default class Logger {
     }
 
     static log(text: string) {
-        console.log(Style.MESSAGE(`[Success] ${fixString(text)}`));
+        console.log(Style.MESSAGE(`[Log] ${fixString(text)}`));
     }
 }
