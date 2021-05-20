@@ -22,18 +22,20 @@ export default abstract class Authorizer {
 
     @AsyncSafe()
     public async authorize(authorizationData: IAuthorizationData): Promise<void> {
+        const { name } = this.source;
+
         if (await this.hasAuthorization()) {
-            return Logger.success(`You are already authorized at ${this.source.name}`);
+            return Logger.success(`You are already authorized at ${name}`);
         }
 
-        Logger.log(`Start authorizing to ${this.source.name}`);
+        Logger.log(`Start authorizing to ${name}`);
         await this.gotoAuthorizationPage();
 
         if (authorizationData.authorizeVia === "") {
             await this.authorizeByDefault(authorizationData)
                 .catch(async () => {throw await this.handleError()});
 
-            return Logger.success(`Authorized to ${this.source.name}`);
+            return Logger.success(`Authorized to ${name}`);
         }
 
         const externalAuthorizationService = this.externalAuthorizationServices
@@ -44,10 +46,10 @@ export default abstract class Authorizer {
                 .authorize(authorizationData)
                 .catch(async () => {throw await this.handleError()});
 
-            return Logger.success(`Authorized to ${this.source.name}`);
+            return Logger.success(`Authorized to ${name}`);
         } else {
             await this.page.close();
-            Logger.error(`Authorization method "${authorizationData.authorizeVia}" for ${this.source.name} doesn't exist. Available sources: ${this.availableExternalServices}`);
+            Logger.error(`Authorization method "${authorizationData.authorizeVia}" for ${name} doesn't exist. Available sources: ${this.availableExternalServices}`);
         }
     }
 
