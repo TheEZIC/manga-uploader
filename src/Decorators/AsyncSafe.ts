@@ -1,4 +1,4 @@
-import Logger from "../../Logger";
+import Logger from "../Logger";
 
 /**
  * Wrap async method to try catch block

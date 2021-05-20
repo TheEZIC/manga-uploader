@@ -3,7 +3,7 @@ import ExternalAuthorizationService from "../ExternalAuthorizationService/Extern
 import IAuthorizationData from "../IAuthorizationData";
 import Logger from "../Logger";
 import Source, {ISourceInfo} from "./Source";
-import AsyncSafe from "./Decorators/AsyncSafe";
+import AsyncSafe from "../Decorators/AsyncSafe";
 
 export default abstract class Authorizer {
     protected page: Page;
@@ -46,6 +46,7 @@ export default abstract class Authorizer {
 
             return Logger.success(`Authorized to ${this.source.name}`);
         } else {
+            await this.page.close();
             Logger.error(`Authorization method "${authorizationData.authorizeVia}" for ${this.source.name} doesn't exist. Available sources: ${this.availableExternalServices}`);
         }
     }

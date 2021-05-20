@@ -3,7 +3,7 @@ import IAuthorizationData from "../../IAuthorizationData";
 import Logger from "../../Logger";
 import Authorizer from "../Authorizer";
 import VkAuthorizationService from "../../ExternalAuthorizationService/Vk";
-import AsyncSafe from "../Decorators/AsyncSafe";
+import AsyncSafe from "../../Decorators/AsyncSafe";
 
 export default class MangalibAuthorizer extends Authorizer {
     externalAuthorizationServices = [

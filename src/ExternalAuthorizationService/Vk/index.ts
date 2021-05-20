@@ -1,8 +1,8 @@
 import IAuthorizationData from "../../IAuthorizationData";
 import Logger from "../../Logger";
 import ExternalAuthorizationServiceWithToken from "../ExternalAuthorizationServiceWithToken";
-import Safe from "../../Source/Decorators/Safe";
-import AsyncSafe from "../../Source/Decorators/AsyncSafe";
+import Safe from "../../Decorators/Safe";
+import AsyncSafe from "../../Decorators/AsyncSafe";
 
 export default class VkAuthorizationService extends ExternalAuthorizationServiceWithToken {
     name = "vk";

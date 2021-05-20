@@ -1,15 +1,14 @@
 import IAuthorizationData from "../../IAuthorizationData";
 import Logger from "../../Logger";
 import ExternalAuthorizationService from "../ExternalAuthorizationService";
-import Safe from "../../Source/Decorators/Safe";
-import AsyncSafe from "../../Source/Decorators/AsyncSafe";
+import Safe from "../../Decorators/Safe";
+import AsyncSafe from "../../Decorators/AsyncSafe";
 
 export default class GoogleAuthorizationService extends ExternalAuthorizationService {
     name = "google";
 
     @AsyncSafe()
     public async authorize(authorizationData: IAuthorizationData) {
-        await this.page.waitForNavigation({ timeout: 1000 });
         await this.page.waitForSelector(this.buttonSelector);
         await (await this.page.$(this.buttonSelector)).click();
 
