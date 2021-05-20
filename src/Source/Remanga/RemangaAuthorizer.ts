@@ -3,6 +3,7 @@ import IAuthorizationData from "../../IAuthorizationData";
 import Logger from "../../Logger";
 import Authorizer from "../Authorizer";
 import VkAuthorizationService from "../../ExternalAuthorizationService/Vk";
+import AsyncSafe from "../Decorators/AsyncSafe";
 
 export default class RemangaAuthorizer extends Authorizer {
     externalAuthorizationServices = [
@@ -10,6 +11,7 @@ export default class RemangaAuthorizer extends Authorizer {
         new GoogleAuthorizationService(this.source, ".MuiButtonBase-root.MuiButton-text:nth-child(3)"),
     ];
 
+    @AsyncSafe()
     protected async authorizeByDefault(authorizationData: IAuthorizationData) {
         const loginInput = await this.page.$("#login");
         const passwordInput = await this.page.$("#password");

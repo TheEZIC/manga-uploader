@@ -3,6 +3,7 @@ import IAuthorizationData from "../../IAuthorizationData";
 import Logger from "../../Logger";
 import Authorizer from "../Authorizer";
 import VkAuthorizationService from "../../ExternalAuthorizationService/Vk";
+import AsyncSafe from "../Decorators/AsyncSafe";
 
 export default class MangalibAuthorizer extends Authorizer {
     externalAuthorizationServices = [
@@ -10,6 +11,7 @@ export default class MangalibAuthorizer extends Authorizer {
         new VkAuthorizationService(this.source, ".social-sign .button[data-social=vk]"),
     ];
 
+    @AsyncSafe()
     protected async authorizeByDefault(authorizationData: IAuthorizationData) {
         const [, loginInput, passwordInput] = await this.page.$$(".form__input");
 

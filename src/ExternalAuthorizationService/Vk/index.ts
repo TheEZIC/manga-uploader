@@ -1,10 +1,13 @@
 import IAuthorizationData from "../../IAuthorizationData";
 import Logger from "../../Logger";
 import ExternalAuthorizationServiceWithToken from "../ExternalAuthorizationServiceWithToken";
+import Safe from "../../Source/Decorators/Safe";
+import AsyncSafe from "../../Source/Decorators/AsyncSafe";
 
 export default class VkAuthorizationService extends ExternalAuthorizationServiceWithToken {
     name = "vk";
 
+    @AsyncSafe()
     public async authorize(authorizationData: IAuthorizationData) {
         await this.page.waitForSelector(this.buttonSelector);
         await (await this.page.$(this.buttonSelector)).click();
@@ -24,9 +27,12 @@ export default class VkAuthorizationService extends ExternalAuthorizationService
             await this.processTokenConfirmation();
         }
 
+        //Confirm source vk OAath2 usage
         await this.page.waitForTimeout(1000);
         await this.clickBtn(".button_indent");
-        await this.page.waitForNavigation();
+
+        //waiting until we come back to manga source
+        await this.page.waitForNavigation({ waitUntil: "domcontentloaded" });
     }
 
     protected async applyToken(token: string): Promise<void> {

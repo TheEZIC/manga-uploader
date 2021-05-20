@@ -12,22 +12,22 @@ const Style = {
 
 export default class Logger {
     static error(text: string) {
-        console.log(Style.ERROR(`[Error] ${fixString(text)}`));
+        text && console.log(Style.ERROR(`[Error] ${fixString(text)}`));
     }
 
     static warning(text: string) {
-        console.log(Style.WARNING(`[Warning] ${fixString(text)}`));
+        text && console.log(Style.WARNING(`[Warning] ${fixString(text)}`));
     }
 
     static success(text: string) {
-        console.log(Style.SUCCESS(`[Success] ${fixString(text)}`));
+        text && console.log(Style.SUCCESS(`[Success] ${fixString(text)}`));
     }
 
     static attention(text: string) {
-        console.log(Style.ATTENTION(`[Attention] ${fixString(text)}`));
+        text && console.log(Style.ATTENTION(`[Attention] ${fixString(text)}`));
     }
 
     static log(text: string) {
-        console.log(Style.MESSAGE(`[Log] ${fixString(text)}`));
+        text && console.log(Style.MESSAGE(`[Log] ${fixString(text)}`));
     }
 }

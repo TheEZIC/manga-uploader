@@ -1,11 +1,15 @@
 import IAuthorizationData from "../../IAuthorizationData";
 import Logger from "../../Logger";
 import ExternalAuthorizationService from "../ExternalAuthorizationService";
+import Safe from "../../Source/Decorators/Safe";
+import AsyncSafe from "../../Source/Decorators/AsyncSafe";
 
 export default class GoogleAuthorizationService extends ExternalAuthorizationService {
     name = "google";
 
+    @AsyncSafe()
     public async authorize(authorizationData: IAuthorizationData) {
+        await this.page.waitForNavigation({ timeout: 1000 });
         await this.page.waitForSelector(this.buttonSelector);
         await (await this.page.$(this.buttonSelector)).click();
 
@@ -19,7 +23,7 @@ export default class GoogleAuthorizationService extends ExternalAuthorizationSer
             const TFAText = await this.getInnerText("samp.fD1Pid");
 
             Logger.attention(`Google 2FA on ${this.source.name} source. Please press ${TFAText} on your phone`);
-            
+
             let holdProgress = true;
 
             while (holdProgress) {
@@ -33,7 +37,7 @@ export default class GoogleAuthorizationService extends ExternalAuthorizationSer
         }
 
         //waiting until we come back to manga source
-        await this.page.waitForNavigation({ waitUntil: "networkidle2" });
+        await this.page.waitForNavigation({ waitUntil: "domcontentloaded" });
     }
 
     private async fillSection(

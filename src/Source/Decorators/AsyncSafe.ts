@@ -19,7 +19,14 @@ export default function AsyncSafe(
             try {
                 await originalMethod.apply(this, arguments);
             } catch (e) {
-                if (log) Logger.error(e);
+                if (log) {
+                    if (typeof e == "string") {
+                        Logger.error(e);
+                    } else {
+                        console.log(e);
+                    }
+                }
+
                 return await Promise.reject(e);
             }
         }

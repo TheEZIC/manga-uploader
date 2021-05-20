@@ -1,6 +1,4 @@
 import { Browser, Page } from "puppeteer";
-import ExternalAuthorizationService from "../ExternalAuthorizationService/ExternalAuthorizationService";
-import IAuthorizationData from "../IAuthorizationData";
 import Authorizer from "./Authorizer";
 import Uploader from "./Uploader";
 
@@ -22,7 +20,7 @@ export default abstract class Source implements ISourceInfo {
     public async init() {
         this.page = await this.browser.newPage();
         await this.page.setUserAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36");
-        await this.page.goto(this.baseLink, { waitUntil: "networkidle2" });
+        await this.page.goto(this.baseLink, { waitUntil: "domcontentloaded" });
 
         this.loadAuthorizer();
         this.loadUploader();
