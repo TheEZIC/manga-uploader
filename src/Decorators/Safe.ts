@@ -19,7 +19,13 @@ export default function Safe(
             try {
                 originalMethod.apply(this, arguments);
             } catch (e) {
-                if (log) Logger.error(e);
+                if (log) {
+                    if (typeof e == "string") {
+                        Logger.error(e);
+                    } else {
+                        console.log(e);
+                    }
+                }
             }
         }
     }
