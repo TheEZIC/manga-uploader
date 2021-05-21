@@ -11,6 +11,11 @@ export default class GoogleAuthorizationService extends ExternalAuthorizationSer
     public async authorize(authorizationData: IAuthorizationData) {
         await this.page.waitForSelector(this.buttonSelector);
         await (await this.page.$(this.buttonSelector)).click();
+        await this.page.waitForNavigation();
+
+        if (await this.source.authorizer.hasAuthorization()) {
+            return;
+        }
 
         await this.fillSection("input[type=email]", "#identifierNext button[type=button]", authorizationData.login);
         await this.fillSection("input[type=password]", "#passwordNext button[type=button]", authorizationData.password);
